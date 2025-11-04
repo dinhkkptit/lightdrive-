@@ -60,7 +60,7 @@ pip install flask flask-login werkzeug
 
 # Run the app
 python app.py
-
+```
 
 ## ⚙️ Environment Variables (optional)
 
@@ -71,6 +71,7 @@ python app.py
 |`SECRET_KEY`|`dev-secret-change-me`|Flask secret key|
 |`PORT`|`5000`|Web server port|
 
+```
 Example:
 
 `export FILE_ROOT="/mnt/data" export PORT=8080 python app.py`
