@@ -14,8 +14,8 @@
       </div>
       <div class="row">
         <input id="filter" type="text" placeholder="Live search…" oninput="filterRows()" />
-        <a class="btn" href="{{ url_for('download', path=current_rel, format='zip') }}">Download folder (ZIP)</a>
-        <a class="btn" href="{{ url_for('download', path=current_rel, format='tar') }}">Download folder (TAR)</a>
+        <a class="btn" href="{{ url_for('download', path=current_rel, format='zip') }}">ZIP</a>
+        <a class="btn" href="{{ url_for('download', path=current_rel, format='tar') }}">TAR</a>
       </div>
     </div>
 
@@ -31,9 +31,12 @@
       <tbody>
         {% if current_rel %}
           <tr>
-            <td colspan="4"><a href="{{ url_for('browse', path=relpath_from_root((ROOT_DIR + '/' + current_rel).rsplit('/',1)[0])) }}"></a></td>
+            <td colspan="4">
+              <a href="{{ url_for('browse', path='/'.join(current_rel.split('/')[:-1])) }}">⬅️ Up one level</a>
+            </td>
           </tr>
         {% endif %}
+
         {% for e in entries %}
           <tr data-name="{{ e.name|lower }}">
             <td>
@@ -124,10 +127,8 @@
     const fd = new FormData();
     for(const f of files){
       fd.append('files[]', f, f.name);
-      // try to include relative path if present (webkitRelativePath)
       if (f.webkitRelativePath){
         fd.append('relative_path', f.webkitRelativePath);
-        // Also add per-file override for server-side mapping
         fd.append('relpath_' + f.name, f.webkitRelativePath);
       }
     }
@@ -166,7 +167,7 @@
     });
   }
 
-  // Drag & drop (including folders using DataTransferItem webkit entries)
+  // Drag & drop handling
   drop.addEventListener('dragover', e=>{
     e.preventDefault(); drop.classList.add('dragover');
   });
@@ -176,7 +177,6 @@
   drop.addEventListener('drop', async (e)=>{
     e.preventDefault(); drop.classList.remove('dragover');
     const items = e.dataTransfer.items;
-    // If browser supports directory entries, traverse; else fallback to files list
     if(items && items[0] && items[0].webkitGetAsEntry){
       const files = [];
       const traverse = (entry, pathPrefix='')=>{
@@ -192,7 +192,7 @@
             const entries = [];
             const readBatch = ()=>{
               dirReader.readEntries(async results=>{
-                if(!results.length){ // done
+                if(!results.length){
                   for(const child of entries){
                     await traverse(child, pathPrefix + entry.name + '/');
                   }
