@@ -79,9 +79,9 @@ Example:
 ---
 
 ## 🧩 Folder Structure
-
+```
 `lightdrive/ │ ├── app.py ├── users.db            # auto-created ├── storage/            # your files live here └── templates/     ├── base.html     ├── browse.html     ├── login.html     ├── users.html     ├── editor.html     └── error.html`
-
+```
 ---
 
 ## 🔒 Permissions
