@@ -1,9 +1,0 @@
-- name: Configure ACLs on Cisco devices
-  hosts: all
-  gather_facts: no
-  connection: network_cli
-  tasks:
-    - name: Apply ACL
-      ios_config:
-        lines: "{{ item.lines }}"
-      with_items: "{{ acls }}"

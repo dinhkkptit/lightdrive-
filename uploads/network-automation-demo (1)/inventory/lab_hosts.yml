@@ -1,7 +1,0 @@
-all:
-  hosts:
-    lab-switch:
-      ansible_host: 192.168.100.10
-      ansible_user: admin
-      ansible_password: lab123
-      ansible_network_os: ios

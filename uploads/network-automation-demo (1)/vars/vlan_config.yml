@@ -1,5 +1,0 @@
-vlans:
-  - id: 200
-    name: DMZ
-  - id: 210
-    name: APP

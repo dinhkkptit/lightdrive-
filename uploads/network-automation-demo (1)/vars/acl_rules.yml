@@ -1,5 +1,0 @@
-acls:
-  - name: BLOCK_TELNET
-    lines:
-      - "access-list 101 deny tcp any any eq 23"
-      - "access-list 101 permit ip any any"
